@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.StatDao">
+
+    <sql id="BASE_TABLE">
+        cases
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate
+    </sql>
+
+    <select id="getAllStatistics" parameterType="java.lang.String" resultType="com.example.demo.entity.CaseCountWithTime">
+        select sum(1) as count, DATE_FORMAT(updatedDate,'%Y') as time from cases where status=#{status, jdbcType=VARCHAR} group by DATE_FORMAT(updatedDate,'%Y')
+    </select>
+
+    <select id="getStatisticsByDateInterval" resultType="com.example.demo.entity.CaseCountWithTime">
+        select
+            ifnull(count, 0) as count,
+            datalist as time,
+            ifnull(status, #{status, jdbcType=VARCHAR}) as status
+        from (
+            select
+                sum(1) as count,
+                DATE_FORMAT(interviewDate, '%Y-%m-%d') as date,
+                status
+            from cases
+            where status = #{status, jdbcType=VARCHAR}
+            group by date) as tempResult
+            right join (
+                select datalist
+                from calendar where datalist between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) as tempDate
+            on date = datalist
+        group by datalist
+    </select>
+
+</mapper>

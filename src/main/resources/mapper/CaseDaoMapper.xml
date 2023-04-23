@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.CaseDao">
+
+    <sql id="BASE_TABLE">
+        cases
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate, email
+    </sql>
+
+    <insert id="addCase" parameterType="com.example.demo.entity.Case">
+        insert into
+        cases(cid, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate, email)
+        values(
+               #{cid, jdbcType=VARCHAR},
+               #{location, jdbcType=VARCHAR},
+               #{category, jdbcType=VARCHAR},
+               #{done, jdbcType=BOOLEAN},
+               #{isSTEM, jdbcType=VARCHAR},
+               #{isUniversitySensitive, jdbcType=VARCHAR},
+               #{interviewDate, jdbcType=DATE},
+               #{notes, jdbcType=VARCHAR},
+               #{autoRefreshExpireDate, jdbcType=DATE},
+               #{status, jdbcType=VARCHAR},
+               #{updatedDate, jdbcType=DATE},
+               #{email, jdbcType=VARCHAR}
+              )
+    </insert>
+
+    <select id="getCase" parameterType="java.lang.String" resultType="com.example.demo.entity.Case">
+        select <include refid="BASE_COLUMN"/>
+            from
+                <include refid="BASE_TABLE"/>
+                where cid=#{cid, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAllCases" resultType="com.example.demo.entity.Case">
+        select <include refid="BASE_COLUMN"/>
+            from
+                <include refid="BASE_TABLE"/>
+
+    </select>
+
+    <select id="getCaseByDate" parameterType="java.lang.String" resultType="com.example.demo.entity.Case">
+        select <include refid="BASE_COLUMN"/>
+            from
+                <include refid="BASE_TABLE"/>
+                where interviewDate=#{interviewDate, jdbcType=DATE}
+    </select>
+
+    <select id="getCaseByDateInterval" resultType="com.example.demo.entity.Case">
+        select
+            cid, id, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate, email
+            from
+                <include refid="BASE_TABLE"/>
+                where interviewDate between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}
+    </select>
+
+    <select id="getTotalCount" resultType="java.util.Map">
+        select status, count(status)
+            from
+                <include refid="BASE_TABLE"/>
+                group by status;
+    </select>
+
+    <select id="getTotalCountByDateInterval" resultType="com.example.demo.entity.CaseCount">
+        select status, count(status) as count
+            from
+                <include refid="BASE_TABLE"/>
+                where interviewDate between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE} group by status
+    </select>
+
+    <select id="getTrackableCases" resultType="com.example.demo.entity.Case">
+        select
+            cid, location, email
+        from
+            cases
+        where
+            autoRefreshExpireDate >= #{dateOfToday, jdbcType=DATE}
+        and
+            done = false
+    </select>
+
+    <update id="updateCase">
+        UPDATE cases
+        SET status=#{status, jdbcType=VARCHAR}, updatedDate=#{updatedDate, jdbcType=DATE}
+        where cid=#{cid, jdbcType=VARCHAR};
+    </update>
+
+    <delete parameterType="java.lang.String" id="removeCase">
+        DELETE FROM
+                   cases
+               WHERE cid=#{cid, jdbcType=VARCHAR};
+    </delete>
+
+    <update id="updateCaseEmail">
+        UPDATE cases
+        SET email=#{email, jdbcType=VARCHAR}
+        where cid=#{cid, jdbcType=VARCHAR};
+    </update>
+
+    <update id="updateCaseDone">
+        UPDATE cases
+        set done=true
+        where cid=#{cid, jdbcType=VARCHAR};
+    </update>
+</mapper>
