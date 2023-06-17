@@ -51,6 +51,11 @@ tasks.withType(Javadoc) {
     options.encoding = 'UTF-8'
 }
 
+task stopRunningApp(type: Exec) {
+    dependsOn 'frontendAssemble'
+    commandLine "kill \$(lsof -t -i:8080)"
+}
+
 task npmBuild(type: Exec) {
     workingDir = file(NODE_PROJ_DIR)
     commandLine NODE_MANAGER, "run", "build"
@@ -65,6 +70,12 @@ task frontendAssemble(type: Copy, dependsOn: "npmBuild") {
     def buildDir = file("$NODE_PROJ_DIR/build")
     from buildDir
     into "build/resources/main/static"
+}
+
+task runApp(type: Exec) {
+    dependsOn(compileJava)
+    workingDir = file(JAR_DIR)
+    commandLine "java -jar", "$description-$version.$executableFileType"
 }
 
 compileJava.dependsOn 'frontendAssemble'
