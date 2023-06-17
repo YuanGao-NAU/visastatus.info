@@ -72,13 +72,7 @@ task frontendAssemble(type: Copy, dependsOn: "npmBuild") {
     into "build/resources/main/static"
 }
 
-task runApp(type: Exec) {
-    dependsOn(compileJava)
-    workingDir = file(JAR_DIR)
-    commandLine "java -jar", "$description-$version.$executableFileType"
-}
-
-compileJava.dependsOn 'frontendAssemble'
+compileJava.dependsOn 'stopRunningApp'
 
 if (project.hasProperty("node.install")) {
     npmBuild.dependsOn 'npmInstall'
