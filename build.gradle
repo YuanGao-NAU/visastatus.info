@@ -15,7 +15,6 @@ repositories {
     maven {
         url = uri('https://repo.maven.apache.org/maven2/')
     }
-    mavenLocal()
     mavenCentral()
 }
 
@@ -54,7 +53,7 @@ tasks.withType(Javadoc) {
 
 task npmBuild(type: Exec) {
     workingDir = file(NODE_PROJ_DIR)
-    commandLine NODE_MANAGER, "run", "winbuild"
+    commandLine NODE_MANAGER, "run", "build"
 }
 
 task npmInstall(type: Exec) {
