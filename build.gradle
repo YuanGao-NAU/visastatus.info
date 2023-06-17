@@ -51,15 +51,6 @@ tasks.withType(Javadoc) {
     options.encoding = 'UTF-8'
 }
 
-task stopRunningApp(type: Exec) {
-    dependsOn 'frontendAssemble'
-    try {
-        commandLine "kill \$(lsof -t -i:8080)"
-    } catch(Exception e) {
-        print("App is not running so nothing to kill");
-    }
-}
-
 task npmBuild(type: Exec) {
     workingDir = file(NODE_PROJ_DIR)
     commandLine NODE_MANAGER, "run", "build"
@@ -76,7 +67,7 @@ task frontendAssemble(type: Copy, dependsOn: "npmBuild") {
     into "build/resources/main/static"
 }
 
-compileJava.dependsOn 'stopRunningApp'
+compileJava.dependsOn 'frontendAssemble'
 
 if (project.hasProperty("node.install")) {
     npmBuild.dependsOn 'npmInstall'
