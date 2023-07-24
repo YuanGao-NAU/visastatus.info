@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CaseWithHistoryServiceImpl implements CaseWithHistoryService {
@@ -23,13 +24,12 @@ public class CaseWithHistoryServiceImpl implements CaseWithHistoryService {
 
     @Override
     public List<CaseWithHistory> getCasesWithHistory(String startDate, String endDate) {
-        List<CaseWithHistory> list = new ArrayList<>();
-        List<Case> cases = caseDao.getCaseByDateInterval(startDate, endDate);
-        for(Case aCase : cases) {
-            List<CaseHistory> caseHistoryList = caseHistoryDao.getCaseHistory(aCase.getCid());
-            aCase.hidePersonalInfo();
-            list.add(new CaseWithHistory(aCase, caseHistoryList));
-        }
-        return list;
+        return caseDao.getCaseByDateInterval(startDate, endDate).stream()
+                .map(aCase -> {
+                    List<CaseHistory> caseHistoryList = caseHistoryDao.getCaseHistory(aCase.getCid());
+                    aCase.hidePersonalInfo();
+                    return new CaseWithHistory(aCase, caseHistoryList);
+                })
+                .collect(Collectors.toList());
     }
 }
