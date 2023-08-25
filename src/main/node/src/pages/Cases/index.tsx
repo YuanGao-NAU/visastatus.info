@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {DatePicker, message, Radio, Select, Timeline} from "antd";
+import {DatePicker, message, Radio, Select, Timeline, Space} from "antd";
 import {Col, Row} from "antd";
 import moment, {Moment} from "moment";
 import VisaTable, {Props, TableDataType} from "../Index/table";
@@ -56,22 +56,24 @@ const App: React.FC = () => {
                     lg={{ span: 16, push: 4 }}
                     xl={{ span: 14, push: 5 }}
                 >
-                    <DatePicker
-                        placement={"bottomLeft"}
-                        picker={"month"}
-                        disabledDate={disabledDate}
-                        defaultValue={dateValue}
-                        value={dateValue}
-                        size={"large"}
-                        onChange={(date:Moment|null)=>{
-                            setDateValue(date ? date : moment().startOf("month"));
-                        }}
-                    />
-                    <Select defaultValue="- SELECT ONE -" showSearch onChange={(value)=>{setCategory(value)}}>
-                        {VISA_TYPES.map((visaType, index)=>(
-                            <Option key={"visaType"+index} value={visaType}>{visaType}</Option>
-                        ))}
-                    </Select>
+                    <Space>
+                        <DatePicker
+                            placement={"bottomLeft"}
+                            picker={"month"}
+                            disabledDate={disabledDate}
+                            defaultValue={dateValue}
+                            value={dateValue}
+                            size={"large"}
+                            onChange={(date:Moment|null)=>{
+                                setDateValue(date ? date : moment().startOf("month"));
+                            }}
+                        />
+                        <Select size={"large"} defaultValue="- SELECT ONE -" showSearch onChange={(value)=>{console.log(value);setCategory(value)}}>
+                            {VISA_TYPES.map((visaType, index)=>(
+                                <Option key={"visaType"+index} value={visaType}>{visaType}</Option>
+                            ))}
+                        </Select>
+                    </Space>
                 </Col>
             </Row>
             <Row>
