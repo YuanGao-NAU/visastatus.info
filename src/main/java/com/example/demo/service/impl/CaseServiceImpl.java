@@ -47,6 +47,10 @@ public class CaseServiceImpl implements CaseService {
         return caseDao.getCaseByDateInterval(startDate, endDate);
     }
 
+    public List<Case> getCaseByDateInterval(String startDate, String endDate, String category) {
+        return caseDao.getCaseByDateIntervalAndCategory(startDate, endDate, category);
+    }
+
     public Map<String, Integer> getTotalCount() {
         return caseDao.getTotalCount();
     }

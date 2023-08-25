@@ -32,4 +32,15 @@ public class CaseWithHistoryServiceImpl implements CaseWithHistoryService {
                 })
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<CaseWithHistory> getCasesWithHistory(String startDate, String endDate, String category) {
+        return caseDao.getCaseByDateIntervalAndCategory(startDate, endDate, category).stream()
+                .map(aCase -> {
+                    List<CaseHistory> caseHistoryList = caseHistoryDao.getCaseHistory(aCase.getCid());
+                    aCase.hidePersonalInfo();
+                    return new CaseWithHistory(aCase, caseHistoryList);
+                })
+                .collect(Collectors.toList());
+    }
 }

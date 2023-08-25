@@ -22,6 +22,7 @@ public interface CaseDao {
     public List<Case> getCaseByDate(String date);
 
     public List<Case> getCaseByDateInterval(@Param("startDate")String startDate, @Param("endDate")String endDate);
+    public List<Case> getCaseByDateIntervalAndCategory(@Param("startDate")String startDate, @Param("endDate")String endDate, @Param("category")String category);
 
     public Map<String, Integer> getTotalCount();
 

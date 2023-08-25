@@ -109,7 +109,7 @@ public class CaseController {
                 receivedMessage.setMessage("We have received your case, but CEAC is not available now for us. Will process your case later!");
 
                 if (newCase.getEmail() != null && newCase.getEmail().length() != 0) {
-                    mailUtils.sendSimpleMail(
+                    mailUtils.sendSimpleMail( 
                             newCase.getEmail(),
                             "Case has been submitted",
                             "CEAC website is currently unavailable for us, will notify you when we are able to process." + "\n\n" +

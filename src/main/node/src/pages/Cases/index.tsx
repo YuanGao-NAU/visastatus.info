@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {DatePicker, message, Radio, Timeline} from "antd";
+import {DatePicker, message, Radio, Select, Timeline} from "antd";
 import {Col, Row} from "antd";
 import moment, {Moment} from "moment";
 import VisaTable, {Props, TableDataType} from "../Index/table";
 import axios from "axios";
 import {CheckCircleTwoTone, ClockCircleOutlined, CloseCircleTwoTone, LoadingOutlined} from "@ant-design/icons";
 import {caseHistory} from "../Detail";
+import {VISA_TYPES} from "../Form/utils";
+const {Option} = Select;
 
 const baseURL = "/cases";
 
@@ -13,6 +15,7 @@ const App: React.FC = () => {
 
     const [dateValue, setDateValue] = useState<Moment>(moment().startOf("month"));
     const [tableData, setTableData] = useState<Props>();
+    const [category, setCategory] = useState<string>("");
 
     const disabledDate = (current: Moment) => {
         //console.log(current)
@@ -30,6 +33,7 @@ const App: React.FC = () => {
         const endDate = dateValue ? dateValue.endOf("month").format("YYYY-MM-DD"): moment().endOf("month").format("YYYY-MM-DD");
         formData.append("startDate", startDate);
         formData.append("endDate", endDate);
+        formData.append("category", category);
         axios.post(baseURL + "/list", formData, config)
             .then((response)=>{
                 setTableData(response.data);
@@ -63,6 +67,11 @@ const App: React.FC = () => {
                             setDateValue(date ? date : moment().startOf("month"));
                         }}
                     />
+                    <Select defaultValue="- SELECT ONE -" showSearch onChange={(value)=>{setCategory(value)}}>
+                        {VISA_TYPES.map((visaType, index)=>(
+                            <Option key={"visaType"+index} value={visaType}>{visaType}</Option>
+                        ))}
+                    </Select>
                 </Col>
             </Row>
             <Row>

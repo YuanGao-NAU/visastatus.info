@@ -8,4 +8,6 @@ import java.util.List;
 public interface CaseWithHistoryService {
 
     public List<CaseWithHistory> getCasesWithHistory(String startDate, String endDate);
+
+    public List<CaseWithHistory> getCasesWithHistory(String startDate, String endDate, String category);
 }

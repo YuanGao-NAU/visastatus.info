@@ -24,10 +24,16 @@ public class CaseWithHistoryController {
             @RequestParam(name = "startDate", required = false, defaultValue = "2010-01-01")
             String startDate,
             @RequestParam(name = "endDate", required = false, defaultValue = "2099-01-01")
-            String endDate
+            String endDate,
+            @RequestParam(name = "category", required = false, defaultValue = "")
+            String category
     ) {
         Map<String, Object> map = new HashMap<>();
-        map.put("cases", caseWithHistoryService.getCasesWithHistory(startDate, endDate));
+        if(category.equals("")) {
+            map.put("cases", caseWithHistoryService.getCasesWithHistory(startDate, endDate));
+        } else {
+            map.put("cases", caseWithHistoryService.getCasesWithHistory(startDate, endDate, category));
+        }
         return map;
     }
 }

@@ -2,10 +2,8 @@
  * 路由列表
  */
 import Index from "./pages/Index";
-import Table from './pages/Table';
 import Detail from "./pages/Detail";
 import Form from "./pages/Form"
-import Content from './pages/Content'
 import Cases from "./pages/Cases";
 
 // const STATIC_ROUTES = [{
