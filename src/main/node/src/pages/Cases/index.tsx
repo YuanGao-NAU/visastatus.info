@@ -44,7 +44,7 @@ const App: React.FC = () => {
         })
     }
 
-    useEffect(()=>{getTableData()}, [dateValue]);
+    useEffect(()=>{getTableData()}, [dateValue, category]);
 
     return (
         <>
@@ -68,7 +68,7 @@ const App: React.FC = () => {
                                 setDateValue(date ? date : moment().startOf("month"));
                             }}
                         />
-                        <Select size={"large"} defaultValue="- SELECT ONE -" showSearch onChange={(value)=>{console.log(value);setCategory(value)}}>
+                        <Select size={"large"} defaultValue="- SELECT ONE -" showSearch onChange={(value)=>{setCategory(value)}}>
                             {VISA_TYPES.map((visaType, index)=>(
                                 <Option key={"visaType"+index} value={visaType}>{visaType}</Option>
                             ))}

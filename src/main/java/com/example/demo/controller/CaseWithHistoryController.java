@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/cases")
@@ -29,11 +27,9 @@ public class CaseWithHistoryController {
             String category
     ) {
         Map<String, Object> map = new HashMap<>();
-        if(category.equals("")) {
-            map.put("cases", caseWithHistoryService.getCasesWithHistory(startDate, endDate));
-        } else {
-            map.put("cases", caseWithHistoryService.getCasesWithHistory(startDate, endDate, category));
-        }
+        List<CaseWithHistory> cases = category.equals("") ? caseWithHistoryService.getCasesWithHistory(startDate, endDate) : caseWithHistoryService.getCasesWithHistory(startDate, endDate, category);
+        cases.sort(Comparator.comparing(o -> o.getaCase().getInterviewDate()));
+        map.put("cases", cases);
         return map;
     }
 }
