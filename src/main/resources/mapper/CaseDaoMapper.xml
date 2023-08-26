@@ -63,7 +63,7 @@
         cid, id, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate, email
         from
         <include refid="BASE_TABLE"/>
-        where interviewDate between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE} and category equals #{category, jdbcType=VARCHAR}
+        where interviewDate between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE} and category=#{category, jdbcType=VARCHAR}
     </select>
 
     <select id="getTotalCount" resultType="java.util.Map">
