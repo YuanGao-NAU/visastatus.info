@@ -82,7 +82,7 @@ public class CaseController {
             }
             newCase.setNotes("");
             caseService.addCase(newCase);
-            while(caseService.getCase(newCase.getCid()) == null);       //在数据库中找不到当前保存的case就不退出循环
+            while(caseService.getCase(newCase.getCid()) == null);       //make sure case is added to database
 
             if(newCase.getEmail() != null && newCase.getEmail().length() != 0) {
                 mailUtils.sendSimpleMail(
@@ -91,13 +91,6 @@ public class CaseController {
                         "current status: " + receivedMessage.getActualStatus() +  "\n\n" +
                                 "To make sure you can receive updates in time, please add this email address to your contact list."
                 );
-
-//                mailUtils.sendSimpleMail(
-//                        "gaoyuan199325@gmail.com",
-//                        "Case has been submitted",
-//                        "current status: " + receivedMessage.getActualStatus() + ", for case: " + newCase.getCid() +  "\n\n" +
-//                                "To make sure you can receive updates in time, please add this email address to your contact list."
-//                );
 
                 LOGGER.info(String.format("Email has been sent to %s for case %s with status: %s", newCase.getEmail(), newCase.getCid(), receivedMessage.getActualStatus()));
             }
@@ -115,13 +108,6 @@ public class CaseController {
                             "CEAC website is currently unavailable for us, will notify you when we are able to process." + "\n\n" +
                                     "To make sure you can receive updates in time, please add this email address to your contact list."
                     );
-
-//                    mailUtils.sendSimpleMail(
-//                            "gaoyuan199325@gmail.com",
-//                            "Case has been submitted",
-//                            "CEAC website is currently unavailable for us, will notify you when we are able to process." + "\n\n" +
-//                                    "To make sure you can receive updates in time, please add this email address to your contact list."
-//                    );
 
                     LOGGER.info(String.format("Email has been sent to %s for case %s", newCase.getEmail(), newCase.getCid()));
                 }

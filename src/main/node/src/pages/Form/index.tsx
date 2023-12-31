@@ -93,9 +93,6 @@ const FormPage = () => {
     }
 
     const submitApplication = (values: any) => {
-        // const config= {
-        //     headers: {'Content-Type': 'application/json'}
-        // }
         setComponentDisabled(true);
         axios.post(baseURL + "/add", values)
             .then((response)=>{
@@ -267,6 +264,42 @@ const FormPage = () => {
                             extra={<p style={{color:"orange"}}>Leave you email address so that you can be notified when there's a update on your case</p>}
                         >
                             <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="passportID"
+                            label="Passport Number"
+                            rules={[
+                                {
+                                    type: "string",
+                                    message: "Please input your application id"
+                                },
+                                {
+                                    required: true,
+                                    message: "Please input your application id"
+                                },
+                            ]}
+                        >
+                            <Input/>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="surname"
+                            label="First 5 letters of your surname"
+                            rules={[
+                                {
+                                    type: "string",
+                                    message: "Please input your application id"
+                                },
+                                {
+                                    required: true,
+                                    message: "Please input your application id"
+                                },
+                            ]}
+                        >
+                            <Input
+                                placeholder={"If less than 5 letters, type all of them. No SPACE in the end"}
+                            />
                         </Form.Item>
 
                         <Form.Item>

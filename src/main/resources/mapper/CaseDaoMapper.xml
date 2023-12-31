@@ -7,12 +7,12 @@
     </sql>
 
     <sql id="BASE_COLUMN">
-        id, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate, email
+        id, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate, email, passportID, surname
     </sql>
 
     <insert id="addCase" parameterType="com.example.demo.entity.Case">
         insert into
-        cases(cid, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate, email)
+        cases(cid, location, category, done, isSTEM, isUniversitySensitive, interviewDate, notes, autoRefreshExpireDate, status, updatedDate, email, passportID, surname)
         values(
                #{cid, jdbcType=VARCHAR},
                #{location, jdbcType=VARCHAR},
@@ -25,7 +25,9 @@
                #{autoRefreshExpireDate, jdbcType=DATE},
                #{status, jdbcType=VARCHAR},
                #{updatedDate, jdbcType=DATE},
-               #{email, jdbcType=VARCHAR}
+               #{email, jdbcType=VARCHAR},
+               #{passportID, jdbcType=VARCHAR},
+               #{surname, jdbcType=VARCHAR}
               )
     </insert>
 

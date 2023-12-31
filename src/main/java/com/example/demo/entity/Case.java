@@ -18,10 +18,13 @@ public class Case {
     private String updatedDate;
     private String email;
 
+    private String passportID;      //passport ID is required when querying status
+    private String surname;         //surname is required when querying status
+
     public Case() {
     }
 
-    public Case(String cid, int id, String location, String category, boolean done, String isSTEM, String isUniversitySensitive, String interviewDate, String notes, String autoRefreshExpireDate, String status, String updatedDate, String email) {
+    public Case(String cid, int id, String location, String category, boolean done, String isSTEM, String isUniversitySensitive, String interviewDate, String notes, String autoRefreshExpireDate, String status, String updatedDate, String email, String passportID, String surname) {
         this.cid = cid;
         this.id = id;
         this.location = location;
@@ -35,6 +38,8 @@ public class Case {
         this.status = status;
         this.updatedDate = updatedDate;
         this.email = email;
+        this.passportID = passportID;
+        this.surname = surname;
     }
 
     public String getCid() {
@@ -141,9 +146,27 @@ public class Case {
         this.email = email;
     }
 
+    public String getPassportID() {
+        return passportID;
+    }
+
+    public void setPassportID(String passportID) {
+        this.passportID = passportID;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public void hidePersonalInfo() {
         cid = "";
         email = "";
+        passportID = "";
+        surname = "";
     }
 
     @Override
@@ -158,6 +181,7 @@ public class Case {
     public int hashCode() {
         return Objects.hash(cid);
     }
+
 
     @Override
     public String toString() {
@@ -175,7 +199,8 @@ public class Case {
                 ", status='" + status + '\'' +
                 ", updatedDate='" + updatedDate + '\'' +
                 ", email='" + email + '\'' +
+                ", passportID='" + passportID + '\'' +
+                ", surname='" + surname + '\'' +
                 '}';
     }
-
 }
