@@ -40,6 +40,7 @@ const FormPage = () => {
 
     const onFinish = (values: any) => {
         values.interviewDate = moment(values.interviewDate).format("YYYY-MM-DD");
+        values.surname = values.surname.toUpperCase();
         console.log('Success:', values);
         submitApplication(values);
     };
