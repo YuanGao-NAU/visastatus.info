@@ -272,11 +272,11 @@ const FormPage = () => {
                             rules={[
                                 {
                                     type: "string",
-                                    message: "Please input your application id"
+                                    message: "Please input your passport ID"
                                 },
                                 {
                                     required: true,
-                                    message: "Please input your application id"
+                                    message: "Please input your passport ID"
                                 },
                             ]}
                         >
@@ -289,11 +289,11 @@ const FormPage = () => {
                             rules={[
                                 {
                                     type: "string",
-                                    message: "Please input your application id"
+                                    message: "Please input your surname"
                                 },
                                 {
                                     required: true,
-                                    message: "Please input your application id"
+                                    message: "Please input your surname"
                                 },
                             ]}
                         >

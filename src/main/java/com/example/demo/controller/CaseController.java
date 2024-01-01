@@ -62,6 +62,8 @@ public class CaseController {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("loc", Utils.LOCATIONS.get(newCase.getLocation()));
         params.add("caseNumber", newCase.getCid());
+        params.add("passportID", newCase.getPassportID());
+        params.add("surname", newCase.getSurname());
         ReceivedMessage receivedMessage = Utils.sendPostRequest("http://localhost:8081/getStatus", params);
 
         while(receivedMessage.getStatus().equals("invalidCaptcha")) {       //验证码错误，重复查询直到验证码识别正确

@@ -66,6 +66,8 @@ public class ScheduledQuery {
             params.remove("caseNumber");
             params.add("loc", Utils.LOCATIONS.get(item.getLocation()));
             params.add("caseNumber", item.getCid());
+            params.add("passportID", item.getPassportID());
+            params.add("surname", item.getSurname());
             try {
                 ReceivedMessage receivedMessage = Utils.sendPostRequest("http://localhost:8081/getStatus", params);
 
