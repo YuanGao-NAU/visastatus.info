@@ -83,6 +83,11 @@ public class CaseController {
                 LOGGER.info(String.format("Case %s has been saved!, the email address is : %s", newCase.getCid(), newCase.getEmail()));
             }
             newCase.setNotes("");
+
+            if(receivedMessage.getStatus().equals("Issued")) {
+                newCase.setDone(true);
+            }
+
             caseService.addCase(newCase);
             while(caseService.getCase(newCase.getCid()) == null);       //make sure case is added to database
 
