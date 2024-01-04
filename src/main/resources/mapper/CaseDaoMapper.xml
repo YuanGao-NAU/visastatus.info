@@ -84,7 +84,7 @@
 
     <select id="getTrackableCases" resultType="com.example.demo.entity.Case">
         select
-            cid, location, email
+            cid, location, email, passportID, surname
         from
             cases
         where
