@@ -35,7 +35,6 @@ public class ScheduledQuery {
 
     ReentrantLock lock =  new  ReentrantLock( true );
 
-    private MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledQuery.class);
 
@@ -62,12 +61,15 @@ public class ScheduledQuery {
         LOGGER.info(String.format("There are %d cases waiting for update", caseList.size()));
 
         for(Case item: caseList) {
-            params.remove("loc");
-            params.remove("caseNumber");
+
+            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             params.add("loc", Utils.LOCATIONS.get(item.getLocation()));
             params.add("caseNumber", item.getCid());
             params.add("passportID", item.getPassportID());
             params.add("surname", item.getSurname());
+
+            LOGGER.info(String.format("loc is %s, caseNumber is %s, passportID is %s, surname is %s", params.get("loc"), params.get("caseNumber"), params.get("passportID"), params.get("surname")));
+
             try {
                 ReceivedMessage receivedMessage = Utils.sendPostRequest("http://localhost:8081/getStatus", params);
 
