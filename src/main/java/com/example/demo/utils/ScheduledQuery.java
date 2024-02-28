@@ -138,7 +138,7 @@ public class ScheduledQuery {
                 }
 
             } catch(RestClientException e) {
-                LOGGER.info(String.format("Network error when updating the cases"));
+                LOGGER.info("Network error when updating the cases");
             }
         }
     }
